@@ -23,6 +23,9 @@ func TestSparseTableIdempQuery(t *testing.T) {
 		}
 		f := funcs[rand.IntN(len(funcs))]
 		st := New(nums, f)
+		if st.Size() != len(nums) {
+			t.Errorf("sparse table size incorrect: %v (%v expected)", st.Size(), len(nums))
+		}
 		for range queryCount {
 			length := rand.IntN(numsLen-1) + 1
 			left := rand.IntN(numsLen)
@@ -30,7 +33,7 @@ func TestSparseTableIdempQuery(t *testing.T) {
 			res1 := st.IdempQuery(left, right)
 			res2 := agr(nums[left:right+1], f)
 			if res1 != res2 {
-				t.Errorf("%v != %v: [%v, %v]\n", res1, res2, left, right)
+				t.Errorf("%v != %v: [%v, %v]", res1, res2, left, right)
 			}
 		}
 	}
@@ -50,6 +53,9 @@ func TestSparseTableNonIdempQuery(t *testing.T) {
 			nums[i] = rand.IntN(numsRange) + minNum
 		}
 		st := New(nums, sum)
+		if st.Size() != len(nums) {
+			t.Errorf("sparse table size incorrect: %v (%v expected)", st.Size(), len(nums))
+		}
 		for range queryCount {
 			length := rand.IntN(numsLen-1) + 1
 			left := rand.IntN(numsLen)
@@ -57,7 +63,7 @@ func TestSparseTableNonIdempQuery(t *testing.T) {
 			res1 := st.NonIdempQuery(left, right)
 			res2 := agr(nums[left:right+1], sum)
 			if res1 != res2 {
-				t.Errorf("%v != %v: [%v, %v]\n", res1, res2, left, right)
+				t.Errorf("%v != %v: [%v, %v]", res1, res2, left, right)
 			}
 		}
 	}

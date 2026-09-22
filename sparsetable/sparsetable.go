@@ -62,3 +62,7 @@ func (st *SparseTable) NonIdempQuery(left, right int) int {
 	}
 	return sum
 }
+
+func (st *SparseTable) Size() int {
+	return len(st.items[0])
+}
